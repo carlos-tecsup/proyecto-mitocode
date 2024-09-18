@@ -11,8 +11,6 @@ spring:
       server:
         git:
           uri: https://github.com/carlos-tecsup/config-server-files.git
-          #username: jchoy8890
-          #password: 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
           defaultLabel: ${CONFIG.SERVER.BRANCH:main}
           cloneOnStart: true
           refreshRate: 10
