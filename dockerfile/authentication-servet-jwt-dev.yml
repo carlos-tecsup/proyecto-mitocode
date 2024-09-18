@@ -1,0 +1,12 @@
+server:
+  port: 9099
+
+microservicio:
+  security:
+    key: 995d70f448b9b3ce483fa3d60ddc995a83b2d382aef9c6996acabc4e90d40465539400b642f5c2ee88922f001180d79774f8da994346e9ce84ad5f21b36084df
+
+# Mongo Configuration
+spring:
+  data:
+    mongodb:
+      uri: mongodb://test:luci@localhost:27017/ejercicio?authSource=admin

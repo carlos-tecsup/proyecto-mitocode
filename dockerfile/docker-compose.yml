@@ -1,0 +1,83 @@
+version: '3.9'
+
+services:
+
+  mongo-service:
+    image: mongo
+    container_name: bd-mongo_licencia_conducir
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: test
+      MONGO_INITDB_ROOT_PASSWORD: secret123
+    ports:
+      - 27017:27017
+    networks:
+      - licencia_conducir
+
+  mongo-express:
+    image: mongo-express
+    container_name: bd-mongo-express_licencia_conducir
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: test
+      ME_CONFIG_MONGODB_ADMINPASSWORD: secret123
+      ME_CONFIG_MONGODB_URL: mongodb://test:secret123@mongo-service:27017
+    networks:
+      - licencia_conducir
+
+  postgres-licencia_conducir:
+    image: postgres:13.1-alpine
+    container_name: licencia_conducir-postgresql
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: secret123
+      POSTGRES_DB: licencia_conducir
+    networks:
+      - licencia_conducir
+
+  prometheus:
+    image: prom/prometheus
+    container_name: licencia_conducir-prometheus
+    ports:
+      - 9090:9090
+    volumes: 
+      - ./prometheus/config/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - licencia_conducir
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: licencia_conducir-grafana
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_DOMAIN=localhost
+    networks:
+      - licencia_conducir
+
+  loki:
+    image: grafana/loki
+    container_name: licencia_conducir-loki
+    ports:
+      - 3100:3100
+    networks:
+      - licencia_conducir
+
+  zipkin:
+    image: ghcr.io/openzipkin/zipkin-slim
+    container_name: licencia_conducir-zipkin
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - 9411:9411
+    networks:
+      - licencia_conducir
+
+networks:
+  licencia_conducir:
+    name: licencia_conducir-network

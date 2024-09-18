@@ -1,0 +1,34 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: config-server
+
+## Config Server Configuration
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/carlos-tecsup/config-server-files.git
+          #username: jchoy8890
+          #password: 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
+          defaultLabel: ${CONFIG.SERVER.BRANCH:main}
+          cloneOnStart: true
+          refreshRate: 10
+        encrypt:
+          enabled: true
+# Encrypt key
+encrypt:
+  key: microservicio-secret
+
+## Eureka Client Configuration
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://discovery-server-1.mitocode.com:8761/eureka
+  instance:
+    leaseRenewalIntervalInSeconds: 2
+    leaseExpirationDurationInSeconds: 2

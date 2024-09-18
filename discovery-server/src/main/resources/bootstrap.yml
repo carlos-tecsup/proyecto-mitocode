@@ -1,0 +1,19 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery-server
+
+eureka:
+  client:
+    fetchRegistry: false
+    registerWithEureka: false
+  datacenter: Tecsup
+  environment: Development
+
+  instance:
+    hostname: localhost
+    preferIpAddress: false
+    leaseExpirationDurationInSeconds: 10
+    leaseRenewalIntervalInSeconds: 10

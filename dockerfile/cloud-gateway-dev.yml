@@ -1,0 +1,51 @@
+server:
+  port: ${CUSTOM.SERVER.PORT:9080}
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      product-service-cb:
+        slidingWindowSize: 12
+        failureRateThreshold: 48
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 8
+        slowCallRateThreshold: 58
+        slowCallDurationThreshold: 500ms
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+    instances:
+      mitocode-product: 
+        base-config: product-service-cb
+
+# Spring Cloud Gateway Routes
+spring:
+  cloud:
+    gateway:
+      routes:
+
+        - id: product-service-route
+          uri: lb://product-service #http://service-1.com, http://service-2.com
+          predicates:
+            - Path=/api/product-service/**
+          filters:
+            - StripPrefix=2
+            - AddRequestParameter=flag,true
+            - name: CircuitBreaker
+              args:
+                name: mitocode-product
+                statusCodes: 400,401,403,500,503
+                fallbackUri: forward:/api/user-service/api/mitocode/user
+
+        - id: user-service-route
+          uri: lb://user-service
+          predicates:
+            - Path=/api/user-service/**
+          filters:
+            - StripPrefix=2
+            #- name: CustomFilter
+            #  args:
+            #    headerKey: MitocodeKey
+            #    headerValue: MitocodeValue
+            - UserServiceFilter=MitocodeKey,MitocodeValue
+microservicio:
+  security:
+    key: jY2cZ8Aks6PMdYbllO2iEjqxMjbTiOx1
