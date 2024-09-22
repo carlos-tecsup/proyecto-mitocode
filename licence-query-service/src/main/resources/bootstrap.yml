@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: licence-query-service
+  cloud:
+    config:
+      uri: ${CONFIG.SERVER.HOSTNAME:http://localhost:9000}
+      profile: dev
+      enabled: true

@@ -1,6 +1,6 @@
 package com.tecsup.microservices.authentication_server_jwt.config.security;
 
-import com.tecsup.microservices.authentication_server_jwt.model.entity.UserEntity;
+import com.tecsup.microservices.common_models.entity.UserEntity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;

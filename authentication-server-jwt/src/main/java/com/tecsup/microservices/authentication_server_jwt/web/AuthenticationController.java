@@ -1,8 +1,8 @@
 package com.tecsup.microservices.authentication_server_jwt.web;
 
-import com.tecsup.microservices.authentication_server_jwt.model.dto.UserCredentials;
-import com.tecsup.microservices.authentication_server_jwt.model.dto.UserRegister;
 import com.tecsup.microservices.authentication_server_jwt.service.AuthService;
+import com.tecsup.microservices.common_models.dto.UserCredentials;
+import com.tecsup.microservices.common_models.dto.UserRegister;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,10 +1,11 @@
 package com.tecsup.microservices.authentication_server_jwt.service;
 
 import com.tecsup.microservices.authentication_server_jwt.config.security.JwtService;
-import com.tecsup.microservices.authentication_server_jwt.model.dto.UserCredentials;
-import com.tecsup.microservices.authentication_server_jwt.model.dto.UserRegister;
-import com.tecsup.microservices.authentication_server_jwt.model.entity.UserEntity;
+
 import com.tecsup.microservices.authentication_server_jwt.service.repository.UserRepository;
+import com.tecsup.microservices.common_models.dto.UserCredentials;
+import com.tecsup.microservices.common_models.dto.UserRegister;
+import com.tecsup.microservices.common_models.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

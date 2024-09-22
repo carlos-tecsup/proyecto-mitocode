@@ -26,7 +26,7 @@ eureka:
     fetchRegistry: true
     registerWithEureka: true
     serviceUrl:
-      defaultZone: http://discovery-server-1.mitocode.com:8761/eureka
+      defaultZone: http://discovery-server-1.tecsup.com:8761/eureka
   instance:
     leaseRenewalIntervalInSeconds: 2
     leaseExpirationDurationInSeconds: 2
