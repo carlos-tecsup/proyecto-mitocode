@@ -1,6 +1,7 @@
 spring:
   application:
     name: cloud-gateway
+
   cloud:
     config:
       uri: ${CONFIG.SERVER.HOSTNAME:http://localhost:9000}

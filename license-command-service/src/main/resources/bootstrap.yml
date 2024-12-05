@@ -1,6 +1,7 @@
+
 spring:
   application:
-    name: authentication-servet-jwt
+    name: license-command-service
 
   cloud:
     config:
