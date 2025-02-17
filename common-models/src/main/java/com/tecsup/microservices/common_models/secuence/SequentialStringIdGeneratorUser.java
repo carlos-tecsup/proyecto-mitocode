@@ -5,7 +5,7 @@ import org.hibernate.id.IdentifierGenerator;
 
 import java.io.Serializable;
 
-public class SequentialStringIdGenerator implements IdentifierGenerator {
+public class SequentialStringIdGeneratorUser implements IdentifierGenerator {
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) {

@@ -3,6 +3,7 @@ package com.tecsup.microservices.licence_query_service;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 @SpringBootApplication
 @ComponentScan("com.tecsup.microservices.*")

@@ -23,7 +23,7 @@ public class UserEntity implements UserDetails{
 
     @jakarta.persistence.Id
     @GeneratedValue(generator = "seq-gen")
-    @GenericGenerator(name = "seq-gen", strategy = "com.tecsup.microservices.common_models.secuence.SequentialStringIdGenerator")
+    @GenericGenerator(name = "seq-gen", strategy = "com.tecsup.microservices.common_models.secuence.SequentialStringIdGeneratorUser")
     private String user_id;
     private String name;
     private String lastname;

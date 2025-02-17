@@ -12,10 +12,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DriverLicenseDTO {
+public class DriverLicenseDTORequest {
     private LicenseCategory licenseCategory;
     private String fullName;
     private int documentNumber;
     private int userId;
+    private String licenseId;
 
 }

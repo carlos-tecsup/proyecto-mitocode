@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
@@ -14,10 +16,16 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "driver_license")
 @AllArgsConstructor
-public class DriverLicenseEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    private int id;
+public class DriverLicenseEntityPostgres extends AuditFields implements Serializable  {
+
+    @Serial
+    private static final long serialVersionUID = 1234567890L;
+
+    @jakarta.persistence.Id
+    @GeneratedValue(generator = "seq-gen")
+    @GenericGenerator(name = "seq-gen", strategy = "com.tecsup.microservices.common_models.secuence.SequentialStringIdGeneratorLicense")
+    private String id;
+    @Enumerated(EnumType.STRING)
     private LicenseCategory licenseCategory;
     private boolean state;
     private int documentNumber;
@@ -30,9 +38,9 @@ public class DriverLicenseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity userEntity;
 
-    public DriverLicenseEntity() {
-        this.dueDate = LocalDate.now();
-        this.emitDate = LocalDate.now().plusYears(3);
+    public DriverLicenseEntityPostgres() {
+        this.dueDate = LocalDate.now().plusYears(3);
+        this.emitDate = LocalDate.now();
         this.state = true;
     }
 }

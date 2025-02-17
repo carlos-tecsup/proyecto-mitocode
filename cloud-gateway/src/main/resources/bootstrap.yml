@@ -7,3 +7,24 @@ spring:
       uri: ${CONFIG.SERVER.HOSTNAME:http://localhost:9000}
       profile: ${ENVIRONMENT.DEPLOY:dev} # product-service-dev.yml
       enabled: true
+
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /auth-license/v3/api-docs
+        name: Microservice Auth License
+
+      - url: /command-license/v3/api-docs
+        name: Microservice Command License
+
+      - url: /query-license/v3/api-docs
+        name: Microservice Query License
+
+
+

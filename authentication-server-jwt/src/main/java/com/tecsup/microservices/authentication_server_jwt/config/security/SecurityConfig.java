@@ -20,7 +20,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/auth/**").permitAll()
+                        auth.requestMatchers("/register", "/authenticate","/v3/api-docs/**",        // Especificación OpenAPI (JSON)
+                                        "/swagger-ui/**",         // Recursos de Swagger UI
+                                        "/swagger-ui.html",       // Página principal de Swagger UI
+                                        "/openapi.yml",
+                                        "auth-license/v3/api-docs/**",
+                                        "/v3/**"
+
+                                )
+
+
+                                .permitAll()
+
                                 .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(
                         SessionCreationPolicy.STATELESS))

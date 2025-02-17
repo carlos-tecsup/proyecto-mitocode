@@ -4,8 +4,11 @@ import com.tecsup.microservices.authentication_server_jwt.config.security.JwtSer
 
 import com.tecsup.microservices.authentication_server_jwt.service.repository.UserRepository;
 import com.tecsup.microservices.common_models.dto.UserCredentials;
+import com.tecsup.microservices.common_models.dto.UserDTOResponse;
 import com.tecsup.microservices.common_models.dto.UserRegister;
+import com.tecsup.microservices.common_models.dto.AuthDTOResponse;
 import com.tecsup.microservices.common_models.entity.UserEntity;
+import com.tecsup.microservices.common_models.util.UtilMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,9 +24,10 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final UtilMapper utilMapper;
 
 
-    public String register(UserRegister userRegister) {
+    public AuthDTOResponse register(UserRegister userRegister) {
         UserEntity entity = UserEntity.builder()
                 .username(userRegister.username())
                 .password(passwordEncoder.encode(userRegister.password()))
@@ -33,12 +37,16 @@ public class AuthService {
                 .lastname(userRegister.lastname())
                 .build();
 
-        userRepository.save(entity);
-        return jwtService.generateToken(entity);
+        UserEntity userEntity = userRepository.save(entity);
+        UserDTOResponse userDTOResponse = utilMapper.convertToEntity(userEntity, UserDTOResponse.class);
+        String token = jwtService.generateToken(userEntity);
+        AuthDTOResponse authDTOResponse = AuthDTOResponse.builder().user(userDTOResponse).build();
+        authDTOResponse.getUser().setToken(token);
+        return authDTOResponse;
 
     }
 
-    public String authenticate(UserCredentials userCredentials) {
+    public AuthDTOResponse authenticate(UserCredentials userCredentials) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userCredentials.username(), userCredentials.password()));
 
@@ -48,8 +56,11 @@ public class AuthService {
             throw new UsernameNotFoundException("Usuario no registrado en la BD");
         }
 
-        return jwtService.generateToken(userEntity);
-
+        UserDTOResponse userDTOResponse = utilMapper.convertToEntity(userEntity, UserDTOResponse.class);
+        String token = jwtService.generateToken(userEntity);
+        AuthDTOResponse authDTOResponse = AuthDTOResponse.builder().user(userDTOResponse).build();
+        authDTOResponse.getUser().setToken(token);
+        return authDTOResponse;
     }
 
 }
